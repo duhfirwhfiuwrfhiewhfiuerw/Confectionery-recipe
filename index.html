@@ -59,7 +59,7 @@ body{
 }
 
 .app{
-  display: none; /* ⬅ 인트로 나오기 전 숨김 */
+  display:none; /* ⬅ 인트로 나오기 전 숨김 */
   width:390px;
   min-height:100vh;
   background:#fffaf4;
@@ -474,7 +474,6 @@ function goBack(){
   document.getElementById("listPage").style.display="block";
   document.getElementById("detailPage").style.display="none";
 }
-<script>
 // 🎉 인트로용 아이콘 생성
 function createSplashIcons(){
   const icons = ["🍰","🧁","🥐","🥖","🍩"];
@@ -539,20 +538,18 @@ bgmSwitch.addEventListener("change", function() {
     player.pauseVideo();
   }
 });
-  // 🎉 인트로 + 앱 표시 자동 처리
-createSplashIcons();
-createFallingIcons();
-
-window.addEventListener("load", () => {
-  setTimeout(() => {
+// 🎉 인트로 자동 처리
+window.addEventListener("load",()=>{
+  createSplashIcons();
+  createFallingIcons();
+  setTimeout(()=>{
     const splash = document.getElementById("splash");
-    splash.style.transition = "opacity 1s ease";
-    splash.style.opacity = 0; // 부드럽게 사라짐
-    setTimeout(() => {
-      splash.style.display = "none";
-      document.querySelector(".app").style.display = "block"; // 앱 화면 표시
-    }, 1000); // 1초 후 display:none
-  }, 3000); // 3초 후 인트로 시작
+    splash.style.opacity=0;
+    setTimeout(()=>{
+      splash.style.display="none";
+      document.querySelector(".app").style.display="block";
+    },1000);
+  },3000);
 });
 </script>
 </body>
