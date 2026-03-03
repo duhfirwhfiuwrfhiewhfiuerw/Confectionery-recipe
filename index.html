@@ -131,7 +131,26 @@ iframe{
   margin-top:15px;
   border-radius:15px;
 }
+.videoFrame{
+  margin-top:20px;
+  padding:10px;
+  background:#fff3e6;
+  border-radius:20px;
+  border:3px solid #f1d6bd;
+  box-shadow:0 8px 20px rgba(0,0,0,0.08);
+}
 
+.videoFrame iframe{
+  width:100%;
+  height:200px;
+  border-radius:15px;
+}
+
+.dark .videoFrame{
+  background:#3a2f28;
+  border:3px solid #5a463c;
+  box-shadow:0 8px 20px rgba(0,0,0,0.5);
+}
 /* 🌙 다크모드 */
 .dark{
   background:linear-gradient(#2c2c2c,#1f1f1f);
@@ -194,7 +213,6 @@ iframe{
 
 <script>
 
-/* 👇👇👇 여기 아래는 네 원래 JS 그대로임 (수정된 건 toggleDarkMode만 아이콘용으로 살짝 변경) */
 
 const recipes = {
 "시퐁케이크": { category:"별립법", ingredients:``, process:``, oven:``, density:``, tips:``, youtube:`` },
@@ -276,9 +294,11 @@ function showRecipe(name){
   <p><b>🔥 오븐</b><br>${r.oven}</p>
   <p><b>⚖️ 비중</b><br>${r.density}</p>
   <p><b>✨ 중요사항</b><br>${r.tips}</p>
-  ${r.youtube ? `<iframe src="${r.youtube}" frameborder="0" allowfullscreen></iframe>` : ""}
-  `;
-}
+  ${r.youtube ? `
+  <div class="videoFrame">
+    <iframe src="${r.youtube}" frameborder="0" allowfullscreen></iframe>
+  </div>
+` : ""}
 
 function goBack(){
   document.getElementById("listPage").style.display="block";
