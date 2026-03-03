@@ -4,7 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>제과기능사 레시피</title>
+/* 🎯 제목 정확히 가운데 */
+.titleArea{
+  width:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin-top:10px;
+}
 
+.titleArea h1{
+  margin:0;
+  text-align:center;
+}
 <style>
 body{
   margin:0;
@@ -256,7 +268,8 @@ iframe{
   border:2px solid #555;
 }
 
-/* 🔘 슬라이드 토글 (큰 사이즈 + /* 🌸 분홍 토글 디자인 */
+/* 🔘 슬라이드 토글 (큰 사이즈 + 
+/* 🤍 베이지 토글 디자인 */
 .toggleArea{
   position:absolute;
   top:15px;
@@ -279,7 +292,7 @@ iframe{
 .pill{
   width:100%;
   height:100%;
-  background:#f6c1d1;
+  background:#e7d6c4; /* 베이지 */
   border-radius:30px;
   display:flex;
   align-items:center;
@@ -292,28 +305,59 @@ iframe{
 
 .pill .icon{
   font-size:18px;
-  color:white;
+  color:#5c4332;
   z-index:2;
 }
 
+/* 동그란 버튼 */
 .pill .knob{
   position:absolute;
   right:6px;
   width:34px;
   height:34px;
-  background:#ff8fb1;
+  background:#cbb39a; /* 진한 베이지 */
   border-radius:50%;
   box-shadow:0 4px 10px rgba(0,0,0,0.25);
   transition:0.3s;
 }
 
+/* ON 상태 */
 .pillSwitch input:checked + .pill{
-  background:#ff9fc4;
+  background:#d8c2aa;
 }
 
 .pillSwitch input:checked + .pill .knob{
   transform:translateX(-38px);
-  background:#ff5f9e;
+  background:#b79b7f;
+}
+
+/* 🌙 다크모드일 때 */
+.dark .pill{
+  background:#3b322b;
+}
+
+.dark .pillSwitch input:checked + .pill{
+  background:#5a4a3e;
+}
+
+.dark .pill .knob{
+  background:#8a735f;
+}
+
+/* 딸깍 애니메이션 */
+.pillSwitch input:active + .pill .knob{
+  transform: scale(0.9);
+}
+
+/* ON / OFF 텍스트 */
+.pillSwitch .icon::after{
+  content:" OFF";
+  font-size:11px;
+  opacity:0.7;
+}
+
+.pillSwitch input:checked + .pill .icon::after{
+  content:" ON";
 }
 
 </style>
@@ -324,7 +368,9 @@ iframe{
 <div id="splash">🍰 JSHG</div>
 <div class="app">
 
-<h1>🍰 실기 레시피</h1><!-- 다크모드 슬라이더 -->
+<div class="titleArea">
+  <h1>🍰 실기 레시피</h1>
+</div><!-- 다크모드 슬라이더 -->
 <!-- 🌸 오른쪽 상단 토글 -->
 <div class="toggleArea">
 
