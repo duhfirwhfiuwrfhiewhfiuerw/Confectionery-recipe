@@ -272,20 +272,19 @@ iframe{
   height: 0;
 }
 
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-color: #f1d6bd;
-  transition: 0.4s;
-  border-radius: 34px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 8px;
-  font-size: 18px;
+.slider{
+  position:absolute;
+  cursor:pointer;
+  top:0; left:0; right:0; bottom:0;
+  background-color:#f1d6bd;
+  transition:0.4s;
+  border-radius:34px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between; /* 왼쪽/오른쪽으로 아이콘 배치 */
+  padding:0 8px;
+  font-size:18px;
 }
-
 .slider:before {
   position: absolute;
   content: " ";
@@ -320,16 +319,16 @@ input:checked + .slider.darkSlider {
 <div class="app">
 
 <h1>🍰 실기 레시피</h1>
-<!-- 🌙 다크모드 슬라이드 -->
+<!-- 다크모드 토글 -->
 <label class="switch" style="position:absolute; top:15px; right:15px;">
   <input type="checkbox" id="darkSwitch">
-  <span class="slider darkSlider" data-on="🌙" data-off="☀️"></span>
+  <span class="slider darkSlider">☀️🌙</span>
 </label>
 
-<!-- 🎵 BGM 슬라이드 -->
+<!-- BGM 토글 -->
 <label class="switch" style="position:absolute; top:65px; right:15px;">
   <input type="checkbox" id="bgmSwitch">
-  <span class="slider" data-on="🔊" data-off="🔇"></span>
+  <span class="slider">🔇🔊</span>
 </label>
 
 <input type="text" id="searchInput" placeholder="🔍 품목 검색..." oninput="filterRecipes()">
