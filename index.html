@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>제과기능사 레시피</title>
+
+<style>
+body{
+  margin:0;
+  background:linear-gradient(#f6efe6,#efe2d3);
+  font-family:'Pretendard', sans-serif;
+  display:flex;
+  justify-content:center;
+}
+
+.app{
+  width:390px;
+  min-height:100vh;
+  background:#fffaf4;
+  padding:20px;
+  box-sizing:border-box;
+  position:relative;
+  overflow:hidden;
+}
+
+/* 은은한 빵 패턴 */
+.app::before{
+  content:"🍞 🥐 🥖 🍰 🧁";
+  position:absolute;
+  top:10px;
+  left:10px;
+  font-size:20px;
+  opacity:0.05;
+  letter-spacing:15px;
+}
+
+h1{
+  text-align:center;
+  color:#6b4f3a;
+  margin-bottom:10px;
+}
+
+/* 🍰 케이크 일러스트 */
+.cake-illustration{
+  width:120px;
+  height:100px;
+  margin:10px auto 20px;
+  position:relative;
+}
+
+.cake-base{
+  width:120px;
+  height:60px;
+  background:#d8a47f;
+  border-radius:15px;
+  position:absolute;
+  bottom:0;
+}
+
+.cake-cream{
+  width:120px;
+  height:40px;
+  background:#fff3dc;
+  border-radius:15px 15px 0 0;
+  position:absolute;
+  bottom:40px;
+}
+
+.cake-cherry{
+  width:20px;
+  height:20px;
+  background:#d95c5c;
+  border-radius:50%;
+  position:absolute;
+  top:0;
+  left:50%;
+  transform:translateX(-50%);
+  box-shadow:0 3px 0 #b03a3a;
+}
+
+/* 검색창 */
+input{
+  width:100%;
+  padding:12px;
+  border-radius:20px;
+  border:1px solid #e6d7c8;
+  margin-bottom:15px;
+  background:#fff;
+  box-sizing:border-box;
+  font-size:14px;
+}
+
+/* 버튼 말랑 스타일 */
+button{
+  width:100%;
+  margin:6px 0;
+  padding:12px;
+  border:none;
+  border-radius:25px;
+  background:#f1d6bd;
+  font-weight:bold;
+  color:#5c4332;
+  transition:0.2s;
+  cursor:pointer;
+  box-shadow:0 4px 0 #d9bfa6;
+}
+
+button:hover{
+  transform:translateY(-2px);
+}
+
+button:active{
+  transform:translateY(2px);
+  box-shadow:0 2px 0 #d9bfa6;
+}
+
+.recipeBox{
+  margin-top:20px;
+  padding:18px;
+  background:white;
+  border-radius:20px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.06);
+  border:2px solid #f1e2d3;
+}
+
+.recipeBox h2{
+  color:#7a5a44;
+}
+
+iframe{
+  width:100%;
+  height:200px;
+  margin-top:15px;
+  border-radius:15px;
+}.app{
+  width:390px;
+  min-height:100vh;
+  background:#fffaf3;
+  padding:20px;
+  box-sizing:border-box;
+}
+h1{
+  text-align:center;
+  color:#5c4b3b;
+}
+input{
+  width:100%;
+  padding:10px;
+  border-radius:12px;
+  border:1px solid #e0d5c7;
+  margin-bottom:10px;
+  box-sizing:border-box;
+}
+button{
+  width:100%;
+  margin:5px 0;
+  padding:10px;
+  border:none;
+  border-radius:12px;
+  background:#e8d8c3;
+  font-weight:bold;
+  cursor:pointer;
+}
+button:hover{
+  background:#d8c2a9;
+}
+.recipeBox{
+  margin-top:15px;
+  padding:15px;
+  background:white;
+  border-radius:15px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.05);
+}
+iframe{
+  width:100%;
+  height:200px;
+  margin-top:10px;
+  border-radius:15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+<h1>🍰 실기 레시피</h1>
+
+<input type="text" id="searchInput" placeholder="🔍 품목 검색..." oninput="filterRecipes()">
+
+<div id="buttonArea"></div>
+<div id="recipeDisplay" class="recipeBox"></div>
+
+</div>
+
+<script>
+
+const recipes = {
+
+"시퐁케이크": { ingredients:``, oven:``, density:``, tips:``, youtube:`` },
+"마들렌": { ingredients:``, oven:``, density:``, tips:``, youtube:`` },
+"버터스펀지케이크": { ingredients:``, oven:``, density:``, tips:``, youtube:`` },
+"초코머핀": { ingredients:``, oven:``, density:``, tips:``, youtube:`` },
+"파운드케이크": { ingredients:``, oven:``, density:``, tips:``, youtube:`` },
+"소프트롤케이크": { ingredients:``, oven:``, density:``, tips:``, youtube:`` },
+"쇼트브레드쿠키": { ingredients:``, oven:``, density:``, tips:``, youtube:`` },
+"다쿠아즈": { ingredients:``, oven:``, density:``, tips:``, youtube:`` },
+"타르트": { ingredients:``, oven:``, density:``, tips:``, youtube:`` },
+"브라우니": { ingredients:``, oven:``, density:``, tips:``, youtube:`` },
+"마카롱": { ingredients:``, oven:``, density:``, tips:``, youtube:`` },
+"젤리롤케이크": { ingredients:``, oven:``, density:``, tips:``, youtube:`` },
+"버터쿠키": { ingredients:``, oven:``, density:``, tips:``, youtube:`` },
+"카스테라": { ingredients:``, oven:``, density:``, tips:``, youtube:`` },
+"데코레이션케이크": { ingredients:``, oven:``, density:``, tips:``, youtube:`` },
+"호두파이": { ingredients:``, oven:``, density:``, tips:``, youtube:`` },
+"슈": { ingredients:``, oven:``, density:``, tips:``, youtube:`` },
+"비스킷": { ingredients:``, oven:``, density:``, tips:``, youtube:`` },
+"머랭쿠키": { ingredients:``, oven:``, density:``, tips:``, youtube:`` },
+"과일케이크": { ingredients:``, oven:``, density:``, tips:``, youtube:`` }
+
+};
+
+const buttonArea = document.getElementById("buttonArea");
+const display = document.getElementById("recipeDisplay");
+const searchInput = document.getElementById("searchInput");
+
+// 버튼 생성
+function createButtons(filter=""){
+  buttonArea.innerHTML="";
+
+  for(let name in recipes){
+    if(name.includes(filter)){
+      const btn=document.createElement("button");
+      btn.textContent=name;
+      btn.onclick=()=>showRecipe(name);
+      buttonArea.appendChild(btn);
+    }
+  }
+}
+
+createButtons();
+
+// 검색 필터
+function filterRecipes(){
+  const keyword = searchInput.value.trim();
+  createButtons(keyword);
+}
+
+function showRecipe(name){
+  const r = recipes[name];
+
+  display.innerHTML=`
+  <h2>${name}</h2>
+  <p><b>📋 재료</b><br>${r.ingredients}</p>
+  <p><b>🔥 오븐</b><br>${r.oven}</p>
+  <p><b>⚖️ 비중</b><br>${r.density}</p>
+  <p><b>✨ 중요사항</b><br>${r.tips}</p>
+  ${r.youtube ? `<iframe src="${r.youtube}" frameborder="0" allowfullscreen></iframe>` : ""}
+  `;
+}
+
+</script>
+
+</body>
+</html>
