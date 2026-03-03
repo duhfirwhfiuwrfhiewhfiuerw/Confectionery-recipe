@@ -21,77 +21,27 @@ body{
   padding:20px;
   box-sizing:border-box;
   position:relative;
-  overflow:hidden;
-}
-
-/* 은은한 빵 패턴 */
-.app::before{
-  content:"🍞 🥐 🥖 🍰 🧁";
-  position:absolute;
-  top:10px;
-  left:10px;
-  font-size:20px;
-  opacity:0.05;
-  letter-spacing:15px;
 }
 
 h1{
   text-align:center;
   color:#6b4f3a;
-  margin-bottom:10px;
 }
 
-/* 🍰 케이크 일러스트 */
-.cake-illustration{
-  width:120px;
-  height:100px;
-  margin:10px auto 20px;
-  position:relative;
+h3{
+  margin-top:25px;
+  color:#8b6b55;
 }
 
-.cake-base{
-  width:120px;
-  height:60px;
-  background:#d8a47f;
-  border-radius:15px;
-  position:absolute;
-  bottom:0;
-}
-
-.cake-cream{
-  width:120px;
-  height:40px;
-  background:#fff3dc;
-  border-radius:15px 15px 0 0;
-  position:absolute;
-  bottom:40px;
-}
-
-.cake-cherry{
-  width:20px;
-  height:20px;
-  background:#d95c5c;
-  border-radius:50%;
-  position:absolute;
-  top:0;
-  left:50%;
-  transform:translateX(-50%);
-  box-shadow:0 3px 0 #b03a3a;
-}
-
-/* 검색창 */
 input{
   width:100%;
   padding:12px;
   border-radius:20px;
   border:1px solid #e6d7c8;
   margin-bottom:15px;
-  background:#fff;
   box-sizing:border-box;
-  font-size:14px;
 }
 
-/* 버튼 말랑 스타일 */
 button{
   width:100%;
   margin:6px 0;
@@ -101,13 +51,8 @@ button{
   background:#f1d6bd;
   font-weight:bold;
   color:#5c4332;
-  transition:0.2s;
   cursor:pointer;
   box-shadow:0 4px 0 #d9bfa6;
-}
-
-button:hover{
-  transform:translateY(-2px);
 }
 
 button:active{
@@ -124,61 +69,14 @@ button:active{
   border:2px solid #f1e2d3;
 }
 
-.recipeBox h2{
-  color:#7a5a44;
+iframe{
+  width:100%;
+  height:200px;
+  margin-top:15px;
+  border-radius:15px;
 }
 
-iframe{
-  width:100%;
-  height:200px;
-  margin-top:15px;
-  border-radius:15px;
-}.app{
-  width:390px;
-  min-height:100vh;
-  background:#fffaf3;
-  padding:20px;
-  box-sizing:border-box;
-}
-h1{
-  text-align:center;
-  color:#5c4b3b;
-}
-input{
-  width:100%;
-  padding:10px;
-  border-radius:12px;
-  border:1px solid #e0d5c7;
-  margin-bottom:10px;
-  box-sizing:border-box;
-}
-button{
-  width:100%;
-  margin:5px 0;
-  padding:10px;
-  border:none;
-  border-radius:12px;
-  background:#e8d8c3;
-  font-weight:bold;
-  cursor:pointer;
-}
-button:hover{
-  background:#d8c2a9;
-}
-.recipeBox{
-  margin-top:15px;
-  padding:15px;
-  background:white;
-  border-radius:15px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.05);
-}
-iframe{
-  width:100%;
-  height:200px;
-  margin-top:10px;
-  border-radius:15px;
-}
-  /* 🌙 다크모드 */
+/* 🌙 다크모드 */
 .dark{
   background:linear-gradient(#2c2c2c,#1f1f1f);
 }
@@ -188,9 +86,8 @@ iframe{
   color:#f5f5f5;
 }
 
-.dark h1{
-  color:#ffd8b5;
-}
+.dark h1{ color:#ffd8b5; }
+.dark h3{ color:#ffcc9c; }
 
 .dark input{
   background:#3a3a3a;
@@ -207,9 +104,7 @@ iframe{
 .dark .recipeBox{
   background:#3a3a3a;
   border:2px solid #555;
-  color:#fff;
 }
-
 </style>
 </head>
 
@@ -217,10 +112,10 @@ iframe{
 
 <div class="app">
 <h1>🍰 실기 레시피</h1>
+
 <button onclick="toggleDarkMode()" id="darkBtn">🌙 다크모드</button>
 
 <input type="text" id="searchInput" placeholder="🔍 품목 검색..." oninput="filterRecipes()">
-
 
 <div id="listPage">
   <div id="buttonArea"></div>
@@ -230,93 +125,111 @@ iframe{
   <button onclick="goBack()">⬅ 뒤로가기</button>
   <div id="recipeDisplay" class="recipeBox"></div>
 </div>
+
 </div>
 
 <script>
 
 const recipes = {
 
-"시퐁케이크": { ingredients:``, oven:``, density:``, tips:``, process:``, youtube:`` },
-"마들렌": { ingredients:``, oven:``, density:``, tips:``, process:``, youtube:`` },
-"버터스펀지케이크": { ingredients:``, oven:``, density:``, tips:``, process:``, youtube:`` },
-"초코머핀": { ingredients:`박력분,설탕,버터,달걀,소금,베이킹소다,베이킹파우더,코코아파우더,물,탈지분유,초코칩`, oven:`170/160도 25분`, density:`비중없음`, tips:`코코아파우더 물에 불리기`, process:`1.계란중탕 2.반죽기에 유지투입후 풀어주기, 설탕 소금 두세번 투입, 계란 하나씩 투입, 스크래핑, 투입 반복 3.반죽기에 가루 투입 긁어주듯 섞은후 물에불린 코코아가루 투입후 섞고 초코칩 80정도 넣어주기 4.짤주머니에 반죽을 담은 후 틀 바닥 1센치에서 움직이지않고 짜주면서 일정하게 팬닝 5.나머지 초코칩 위에 골고루 뿌린후 마무리`, youtube:`https://www.youtube.com/embed/p3ccdzOTIHM` },
-"파운드케이크": { ingredients:``, oven:``, density:``, tips:``, process:``, youtube:`` },
-"소프트롤케이크": { ingredients:``, oven:``, density:``, tips:``, process:``, youtube:`` },
-"쇼트브레드쿠키": { ingredients:``, oven:``, density:``, tips:``, process:``, youtube:`` },
-"다쿠아즈": { ingredients:``, oven:``, density:``, tips:``, process:``, youtube:`` },
-"타르트": { ingredients:``, oven:``, density:``, tips:``, process:``, youtube:`` },
-"브라우니": { ingredients:``, oven:``, density:``, tips:``, process:``, youtube:`` },
-"마카롱": { ingredients:``, oven:``, density:``, tips:``, process:``, youtube:`` },
-"젤리롤케이크": { ingredients:``, oven:``, density:``, tips:``, process:``, youtube:`` },
-"버터쿠키": { ingredients:``, oven:``, density:``, tips:``, process:``, youtube:`` },
-"카스테라": { ingredients:``, oven:``, density:``, tips:``, process:``, youtube:`` },
-"데코레이션케이크": { ingredients:``, oven:``, density:``, tips:``, process:``, youtube:`` },
-"호두파이": { ingredients:``, oven:``, density:``, tips:``, process:``, youtube:`` },
-"슈": { ingredients:``, oven:``, density:``, tips:``, process:``, youtube:`` },
-"비스킷": { ingredients:``, oven:``, density:``, tips:``, process:``, youtube:`` },
-"머랭쿠키": { ingredients:``, oven:``, density:``, tips:``, process:``, youtube:`` },
-"과일케이크": { ingredients:``, oven:``, density:``, tips:``, process:``, youtube:`` }
+"시퐁케이크": { category:"별립법", ingredients:``, process:``, oven:``, density:``, tips:``, youtube:`` },
+"마들렌": { category:"크림법", ingredients:``, process:``, oven:``, density:``, tips:``, youtube:`` },
+"버터스펀지케이크": { category:"공립법", ingredients:``, process:``, oven:``, density:``, tips:``, youtube:`` },
+
+"초코머핀": { 
+category:"크림법",
+ingredients:`박력분, 설탕, 버터, 달걀, 소금, 베이킹소다, 베이킹파우더, 코코아파우더, 물, 탈지분유, 초코칩`,
+process:`1. 계란중탕
+2. 유지 풀고 설탕 소금 나눠 투입
+3. 계란 하나씩 투입
+4. 가루 넣고 섞기
+5. 코코아 + 초코칩 넣기
+6. 팬닝 후 굽기`,
+oven:`170/160도 25분`,
+density:`비중 없음`,
+tips:`코코아파우더 물에 불리기`,
+youtube:`https://www.youtube.com/embed/p3ccdzOTIHM`
+},
+
+"파운드케이크": { category:"크림법", ingredients:``, process:``, oven:``, density:``, tips:``, youtube:`` },
+"소프트롤케이크": { category:"공립법", ingredients:``, process:``, oven:``, density:``, tips:``, youtube:`` },
+"쇼트브레드쿠키": { category:"크림법", ingredients:``, process:``, oven:``, density:``, tips:``, youtube:`` },
+"다쿠아즈": { category:"별립법", ingredients:``, process:``, oven:``, density:``, tips:``, youtube:`` },
+"타르트": { category:"수작업", ingredients:``, process:``, oven:``, density:``, tips:``, youtube:`` },
+"브라우니": { category:"복합법", ingredients:``, process:``, oven:``, density:``, tips:``, youtube:`` },
+"마카롱": { category:"별립법", ingredients:``, process:``, oven:``, density:``, tips:``, youtube:`` },
+"젤리롤케이크": { category:"공립법", ingredients:``, process:``, oven:``, density:``, tips:``, youtube:`` },
+"버터쿠키": { category:"크림법", ingredients:``, process:``, oven:``, density:``, tips:``, youtube:`` },
+"카스테라": { category:"공립법", ingredients:``, process:``, oven:``, density:``, tips:``, youtube:`` },
+"데코레이션케이크": { category:"공립법", ingredients:``, process:``, oven:``, density:``, tips:``, youtube:`` },
+"호두파이": { category:"수작업", ingredients:``, process:``, oven:``, density:``, tips:``, youtube:`` },
+"슈": { category:"수작업", ingredients:``, process:``, oven:``, density:``, tips:``, youtube:`` },
+"비스킷": { category:"복합법", ingredients:``, process:``, oven:``, density:``, tips:``, youtube:`` },
+"머랭쿠키": { category:"별립법", ingredients:``, process:``, oven:``, density:``, tips:``, youtube:`` },
+"과일케이크": { category:"복합법", ingredients:``, process:``, oven:``, density:``, tips:``, youtube:`` }
 
 };
 
 const buttonArea = document.getElementById("buttonArea");
 const display = document.getElementById("recipeDisplay");
-const searchInput = document.getElementById("searchInput");
 
-// 버튼 생성
 function createButtons(filter=""){
   buttonArea.innerHTML="";
+  const categories = ["크림법","공립법","별립법","복합법","수작업"];
 
-  for(let name in recipes){
-    if(name.includes(filter)){
-      const btn=document.createElement("button");
-      btn.textContent=name;
-      btn.onclick=()=>showRecipe(name);
-      buttonArea.appendChild(btn);
+  categories.forEach(cat=>{
+    const section=document.createElement("div");
+    section.innerHTML=`<h3>🍞 ${cat}</h3>`;
+
+    for(let name in recipes){
+      if(recipes[name].category===cat && name.includes(filter)){
+        const btn=document.createElement("button");
+        btn.textContent=name;
+        btn.onclick=()=>showRecipe(name);
+        section.appendChild(btn);
+      }
     }
-  }
+
+    buttonArea.appendChild(section);
+  });
 }
 
 createButtons();
 
-// 검색 필터
 function filterRecipes(){
-  const keyword = searchInput.value.trim();
+  const keyword=document.getElementById("searchInput").value.trim();
   createButtons(keyword);
 }
 
 function showRecipe(name){
-  const r = recipes[name];
-
+  const r=recipes[name];
   document.getElementById("listPage").style.display="none";
   document.getElementById("detailPage").style.display="block";
 
   display.innerHTML=`
   <h2>${name}</h2>
   <p><b>📋 재료</b><br>${r.ingredients}</p>
-  <p><b>👩🏻‍🍳 공정</b><br>${r.process}</p>   <!-- 여기 추가 -->
+  <p><b>👩🏻‍🍳 공정</b><br>${r.process}</p>
   <p><b>🔥 오븐</b><br>${r.oven}</p>
   <p><b>⚖️ 비중</b><br>${r.density}</p>
   <p><b>✨ 중요사항</b><br>${r.tips}</p>
   ${r.youtube ? `<iframe src="${r.youtube}" frameborder="0" allowfullscreen></iframe>` : ""}
-`;
+  `;
 }
 
 function goBack(){
   document.getElementById("listPage").style.display="block";
   document.getElementById("detailPage").style.display="none";
 }
-  function toggleDarkMode(){
+
+function toggleDarkMode(){
   document.body.classList.toggle("dark");
-
-  const btn = document.getElementById("darkBtn");
-
-  if(document.body.classList.contains("dark")){
-    btn.textContent="☀ 라이트모드";
-  }else{
-    btn.textContent="🌙 다크모드";
-  }
+  const btn=document.getElementById("darkBtn");
+  btn.textContent=document.body.classList.contains("dark")
+  ? "☀ 라이트모드"
+  : "🌙 다크모드";
 }
+
 </script>
 </body>
 </html>
