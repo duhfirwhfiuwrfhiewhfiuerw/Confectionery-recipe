@@ -11,8 +11,25 @@ body{
   background:linear-gradient(#f6efe6,#efe2d3);
   font-family:'Pretendard', sans-serif;
   display:flex;
-  justify-content:center;
+  justify-content:center;overflow-x:hidden;
+  position:relative;
 }
+
+/* 🌧 떨어지는 아이콘 애니메이션 */
+.falling {
+    position: absolute;
+    top: -50px;
+    pointer-events: none;
+    animation-name: fall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+@keyframes fall {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(120vh) rotate(360deg); }
+}
+
 
 .app{
   width:390px;
@@ -426,6 +443,23 @@ function showRecipe(name){
 function goBack(){
   document.getElementById("listPage").style.display="block";
   document.getElementById("detailPage").style.display="none";
+}
+function createFallingIcons(){
+    const icons = ["🍰","🧁","🥐","🥖","🍩"];
+    for(let i=0; i<30; i++){
+        const span = document.createElement("span");
+        span.textContent = icons[Math.floor(Math.random() * icons.length)];
+        span.style.left = Math.random()*100 + "vw";
+        span.style.fontSize = 20 + Math.random()*30 + "px";
+        span.style.opacity = 0.05 + Math.random()*0.15;
+        span.style.animationDuration = 10 + Math.random()*15 + "s";
+        span.classList.add("falling");
+        document.body.appendChild(span);
+    }
+}
+window.onload = function(){
+    createFallingIcons();
+    createButtons();
 }
 
 // 🌓 다크모드 슬라이드
