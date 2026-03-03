@@ -248,6 +248,15 @@ input:checked + .slider:before {
 #bgmSwitch:checked + .slider {
   background-color: #d98b8b;
 }
+  
+/* 슬라이드 옆 아이콘 */
+.switch .icon {
+  position: absolute;
+  top: 50%;
+  left: 60px; /* 슬라이드 오른쪽 옆 */
+  transform: translateY(-50%);
+  font-size: 20px;
+}
 </style>
 </head>
 <body>
@@ -255,16 +264,19 @@ input:checked + .slider:before {
 <div class="app">
 
 <h1>🍰 실기 레시피</h1>
-<!-- 🎵 BGM 슬라이드 -->
-<label class="switch" id="bgmSwitchLabel" style="top:10px; left:10px;">
-  <input type="checkbox" id="bgmSwitch">
-  <span class="slider"></span>
-</label>
-
-<!-- 🌙 다크모드 슬라이드 -->
+<!-- 슬라이드 아래쪽 배치 -->
+<!-- 🌙 다크모드 -->
 <label class="switch" id="darkSwitchLabel" style="top:15px; right:15px;">
   <input type="checkbox" id="darkSwitch">
   <span class="slider"></span>
+  <span class="icon">🌙</span>
+</label>
+
+<!-- 🎵 BGM -->
+<label class="switch" id="bgmSwitchLabel" style="top:70px; right:15px;">
+  <input type="checkbox" id="bgmSwitch">
+  <span class="slider"></span>
+  <span class="icon">🎵</span>
 </label>
 
 <input type="text" id="searchInput" placeholder="🔍 품목 검색..." oninput="filterRecipes()">
@@ -415,16 +427,21 @@ function onYouTubeIframeAPIReady() {
     height: '0',
     width: '0',
     videoId: 'GI-u9-X8ka8',
-    playerVars: { autoplay:0, loop:1, playlist:'GI-u9-X8ka8' },
-    events: { onReady: function() { bgmReady=true; } }
+    playerVars: { autoplay: 1, loop: 1, playlist: 'GI-u9-X8ka8', mute:1 },
+    events: { 
+      onReady: function() { 
+        bgmReady = true;
+        player.playVideo(); // muted 상태로 먼저 재생
+      } 
+    }
   });
 }
 
 bgmSwitch.addEventListener("change", function() {
   if(!bgmReady) return;
   if(this.checked){
+    player.unMute(); // 소리 켜기
     player.playVideo();
-    player.unMute();
   } else {
     player.pauseVideo();
   }
