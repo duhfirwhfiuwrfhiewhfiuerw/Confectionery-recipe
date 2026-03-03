@@ -357,13 +357,7 @@ function toggleDarkMode(){
   const btn=document.getElementById("darkBtn");
   btn.textContent=document.body.classList.contains("dark") ? "☀" : "🌙";
 }
-/* 🎵 BGM 토글 함수 추가 */
-/* 🎵 BGM 토글 - YouTube API 안정화 */
-<div id="bgmFrame"></div>
-<button id="bgmBtn">🔈</button>
-
-<script src="https://www.youtube.com/iframe_api"></script>
-<script>
+/* 🎵 BGM */
 let player;
 let bgmPlaying = false;
 
@@ -372,25 +366,15 @@ function onYouTubeIframeAPIReady() {
     height: '0',
     width: '0',
     videoId: 'GI-u9-X8ka8',
-    playerVars: {
-      autoplay: 0,
-      loop: 1,
-      playlist: 'GI-u9-X8ka8'
-    },
-    events: {
-      onReady: onPlayerReady
-    }
+    playerVars: { autoplay:0, loop:1, playlist:'GI-u9-X8ka8' },
+    events: { onReady: ()=>{} }
   });
-}
-
-function onPlayerReady(event) {
-  // 준비 완료
 }
 
 document.getElementById("bgmBtn").addEventListener("click", function() {
   if (!bgmPlaying) {
-    player.playVideo();       // 바로 재생
-    player.unMute();          // 무음 해제
+    player.playVideo();
+    player.unMute();
     this.textContent = "🔊";
   } else {
     player.pauseVideo();
@@ -399,7 +383,6 @@ document.getElementById("bgmBtn").addEventListener("click", function() {
   bgmPlaying = !bgmPlaying;
 });
 </script>
-
-</script>
+<script src="https://www.youtube.com/iframe_api"></script>
 </body>
 </html>
