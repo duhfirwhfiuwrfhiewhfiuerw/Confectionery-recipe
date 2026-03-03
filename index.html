@@ -257,71 +257,50 @@ iframe{
 }
 
 /* 🔘 슬라이드 토글 (큰 사이즈 + 아이콘) */
-.switch {
+.switch{
   position: relative;
   display: inline-block;
-  width: 70px;
-  height: 34px;
-  margin-bottom: 15px;
+  width:70px;
+  height:34px;
 }
-
-.switch input { 
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
+.switch input{ opacity:0; width:0; height:0; }
 .slider{
-  position:absolute;
-  cursor:pointer;
-  top:0; left:0; right:0; bottom:0;
+  position: relative;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0 8px;
+  border-radius:34px;
+  height:34px;
   background-color:#f1d6bd;
   transition:0.4s;
-  border-radius:34px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between; /* 왼쪽/오른쪽으로 아이콘 배치 */
-  padding:0 8px;
-  font-size:18px;
 }
-.slider:before {
-  position: absolute;
-  content: " ";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  transition: 0.4s;
-  border-radius: 50%;
+.slider::before{
+  content:"";
+  position:absolute;
+  left:4px; bottom:4px;
+  width:26px; height:26px;
+  background:white;
+  border-radius:50%;
+  transition:0.4s;
+  z-index:2;
 }
-
-input:checked + .slider:before {
+input:checked + .slider::before{
   transform: translateX(36px);
 }
 
+
 /* 다크모드 색상 변경 */
-  .slider.darkSlider {
-  background-color: #f1d6bd;
-}
-input:checked + .slider.darkSlider {
-  background-color: #4a3b32;
+.slider.darkSlider{ background:#f1d6bd; }
+input:checked + .darkSlider{ background:#4a3b32; }
+.slider.bgmSlider{ background:#f1d6bd; }
+input:checked + .bgmSlider{ background:#d98b8b; }
+.slider .icon-left, .slider .icon-right{
+  pointer-events:none;
+  font-size:18px;
+  z-index:1;
 }
 
-/* 브금 색상 변경 */
-.slider.bgmSlider {
-  background-color: #f1d6bd;
-}
-input:checked + .bgmSlider {
-  background-color: #d98b8b;
-}
-/* 아이콘 스타일 */
-.slider .icon-left,
-.slider .icon-right {
-  pointer-events: none; /* 아이콘 클릭 막기 */
-  font-size: 18px;
-  z-index: 1; /* 슬라이더 동그라미 위로 올라오지 않게 */
-}
 </style>
 </head>
 <body>
@@ -330,8 +309,7 @@ input:checked + .bgmSlider {
 <div id="splash">🍰 JSHG</div>
 <div class="app">
 
-<h1>🍰 실기 레시피</h1>
-<!-- 다크모드 토글 -->
+<h1>🍰 실기 레시피</h1><!-- 다크모드 슬라이더 -->
 <label class="switch" style="position:absolute; top:15px; right:15px;">
   <input type="checkbox" id="darkSwitch">
   <span class="slider darkSlider">
@@ -340,7 +318,7 @@ input:checked + .bgmSlider {
   </span>
 </label>
 
-<!-- BGM 토글 -->
+<!-- BGM 슬라이더 -->
 <label class="switch" style="position:absolute; top:65px; right:15px;">
   <input type="checkbox" id="bgmSwitch">
   <span class="slider bgmSlider">
@@ -365,18 +343,25 @@ input:checked + .bgmSlider {
 
 <script src="https://www.youtube.com/iframe_api"></script>
 <script>
-// ✅ 슬라이드 아이콘 표시
-function updateSliderIcons(sliderId){
-  const input = document.getElementById(sliderId);
-  const slider = input.nextElementSibling;
-  function updateIcon(){
-    slider.textContent = input.checked ? slider.dataset.on : slider.dataset.off;
-  }
-  input.addEventListener("change", updateIcon);
-  updateIcon();
+// 다크모드
+document.getElementById("darkSwitch").addEventListener("change", function(){
+  document.body.classList.toggle("dark", this.checked);
+});
+
+// BGM
+let player,bgmReady=false;
+function onYouTubeIframeAPIReady(){
+  player=new YT.Player('bgmFrame',{
+    height:'0', width:'0', videoId:'GI-u9-X8ka8',
+    playerVars:{ autoplay:1, loop:1, playlist:'GI-u9-X8ka8', mute:1 },
+    events:{ onReady:function(){ bgmReady=true; player.playVideo(); } }
+  });
 }
-updateSliderIcons("darkSwitch");
-updateSliderIcons("bgmSwitch");
+document.getElementById("bgmSwitch").addEventListener("change",function(){
+  if(!bgmReady) return;
+  if(this.checked){ player.unMute(); player.playVideo(); } else player.pauseVideo();
+});
+
 
 const recipes = {
 "시퐁케이크": { category:"별립법", ingredients:`박력분,설탕A,설탕B,달걀,소금,베이킹파우더,식용유,물`, process:`1.노른자에 설탕A와 소금을 넣고 섞고 중탕한 물 식용유 넣고 섞은다음 체친가루를 넣고 섞어주세요. 2.흰자를 반죽기에 넣어 설탕을 3번에 나누어 머랭을 만들어주세요. 3.노른자반죽에 머랭을 반씩 나누어 섞어주세요. 4.비중을 측정한 뒤 작은볼로 떠올려 시퐁팬에 팬닝을 해주고 젓가락으로 휘휘저으며 기포제거해주세요. 5.오븐에 30분 굽고 뒤집어서 식힌 뒤 틀을 조심히 빼주고 마무리해주세요.`, oven:`170/150도 30분`, density:`0.4~0.5`, tips:`틀에 물을 충분히 분무하기,계란분리하기`, youtube:`https://www.youtube.com/embed/Ad5LwgpMKsE` },
