@@ -114,31 +114,30 @@ h1{
   height: 0;
 }
 
-.slider{
-  position: relative; /* absolute → relative */
+/* 공통 슬라이더 스타일 */
+.slider {
+  position: relative;
   cursor: pointer;
-  background-color:#f1d6bd;
-  transition:0.4s;
-  border-radius:34px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 10px;
-  font-size:18px;
-  user-select:none;
+  border-radius: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  font-size: 18px;
+  transition: 0.4s;
 }
 
 .slider:before {
-  position: absolute;
   content: "";
-  height: 28px;
-  width: 28px;
+  position: absolute;
+  height: 26px;
+  width: 26px;
   left: 4px;
-  bottom: 3px;
+  bottom: 4px;
   background-color: white;
-  transition: 0.4s;
   border-radius: 50%;
-  z-index:1;
+  transition: 0.4s;
+  z-index: 2;
 }
 
 input:checked + .slider:before {
@@ -146,12 +145,12 @@ input:checked + .slider:before {
 }
 
 input:checked + .slider.darkSlider {
-  background-color: #4a3b32;
+  background-color: #f1d6bd;
 }
 
 #bgmSwitch:checked + .slider {
-  background-color: #d98b8b;}
-
+  background-color: #4a3b32;
+}
 /* 🔍 검색창 업그레이드 */
 input{
   width:100%;
@@ -322,13 +321,19 @@ input:checked + .slider.darkSlider {
 <!-- 다크모드 토글 -->
 <label class="switch" style="position:absolute; top:15px; right:15px;">
   <input type="checkbox" id="darkSwitch">
-  <span class="slider darkSlider" data-off="☀️" data-on="🌙"></span>
+  <span class="slider darkSlider">
+    <span class="icon-left">🌙</span>
+    <span class="icon-right">☀️</span>
+  </span>
 </label>
 
 <!-- BGM 토글 -->
 <label class="switch" style="position:absolute; top:65px; right:15px;">
   <input type="checkbox" id="bgmSwitch">
-  <span class="slider" data-off="🔇" data-on="🔊"></span>
+  <span class="slider bgmSlider">
+    <span class="icon-left">🔇</span>
+    <span class="icon-right">🔊</span>
+  </span>
 </label>
 
 <input type="text" id="searchInput" placeholder="🔍 품목 검색..." oninput="filterRecipes()">
