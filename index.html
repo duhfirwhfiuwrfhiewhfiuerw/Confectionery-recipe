@@ -14,7 +14,35 @@ body{
   justify-content:center;overflow-x:hidden;
   position:relative;
 }
+/* 👋 인트로 화면 */
+#splash {
+  position: fixed;
+  top:0; left:0; right:0; bottom:0;
+  background: linear-gradient(#f6efe6, #efe2d3);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:'Pretendard', sans-serif;
+  font-size:60px;
+  color:#6b4f3a;
+  z-index:9999;
+  opacity:1;
+  transition: opacity 1s ease;
+}
+  /* 🍰 인트로용 떨어지는 아이콘 */
+#splash .fallingSplash {
+    position: absolute;
+    top: -50px;
+    pointer-events: none;
+    animation-name: fallSplash;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
 
+@keyframes fallSplash {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(120vh) rotate(360deg); }
+}
 /* 🌧 떨어지는 아이콘 애니메이션 */
 .falling {
     position: absolute;
@@ -30,8 +58,12 @@ body{
     100% { transform: translateY(120vh) rotate(360deg); }
 }
 
-
+<!-- 인트로 화면 -->
+<div id="splash">
+  🍰 KC
+</div>
 .app{
+  display: none; /* ⬅ 인트로 나오기 전 숨김 */
   width:390px;
   min-height:100vh;
   background:#fffaf4;
@@ -460,6 +492,17 @@ function createFallingIcons(){
 window.onload = function(){
     createFallingIcons();
     createButtons();
+// 🎉 인트로용 아이콘 만들기 + fade out
+    createSplashIcons(); // 인트로 아이콘 생성
+
+    setTimeout(()=>{
+        const splash = document.getElementById("splash");
+        splash.style.opacity = 0; // 서서히 사라짐
+        setTimeout(()=>{
+            splash.style.display = "none"; // 완전히 제거
+            document.querySelector(".app").style.display = "block"; // 앱 화면 등장
+        },1000);
+    },2000);
 }
 
 // 🌓 다크모드 슬라이드
