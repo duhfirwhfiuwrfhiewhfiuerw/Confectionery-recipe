@@ -316,7 +316,7 @@ input:checked + .slider.darkSlider {
 <body>
 
 <!-- 🎉 인트로 -->
-<div id="splash">🍰 KC</div>
+<div id="splash">🍰 JSHG</div>
 <div class="app">
 
 <h1>🍰 실기 레시피</h1>
@@ -474,7 +474,8 @@ function goBack(){
   document.getElementById("listPage").style.display="block";
   document.getElementById("detailPage").style.display="none";
 }
-// 🎉 인트로 + 배경 아이콘
+<script>
+// 🎉 인트로용 아이콘 생성
 function createSplashIcons(){
   const icons = ["🍰","🧁","🥐","🥖","🍩"];
   for(let i=0;i<15;i++){
@@ -501,6 +502,7 @@ function createFallingIcons(){
     document.body.appendChild(span);
   }
 }
+
 
 // 🌓 다크모드 슬라이드
 const darkSwitch = document.getElementById("darkSwitch");
@@ -536,6 +538,21 @@ bgmSwitch.addEventListener("change", function() {
   } else {
     player.pauseVideo();
   }
+});
+  // 🎉 인트로 + 앱 표시 자동 처리
+createSplashIcons();
+createFallingIcons();
+
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    const splash = document.getElementById("splash");
+    splash.style.transition = "opacity 1s ease";
+    splash.style.opacity = 0; // 부드럽게 사라짐
+    setTimeout(() => {
+      splash.style.display = "none";
+      document.querySelector(".app").style.display = "block"; // 앱 화면 표시
+    }, 1000); // 1초 후 display:none
+  }, 3000); // 3초 후 인트로 시작
 });
 </script>
 </body>
