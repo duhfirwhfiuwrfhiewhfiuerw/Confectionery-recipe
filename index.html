@@ -362,7 +362,8 @@ function toggleBGM(){
     const ytID = "GI-u9-X8ka8"; // 원하는 유튜브 ID로 변경
     frame.innerHTML = `<iframe id="bgmIframe" 
                           src="https://www.youtube.com/embed/GI-u9-X8ka8?autoplay=1&loop=1&playlist=GI-u9-X8ka8"
-                          frameborder="0" allow="autoplay" allowfullscreen
+                          frameborder="0" allow="autoplay; encrypted-media; loop"
+                          allowfullscreen
                           style="width:0;height:0;border:0;"></iframe>`;
     document.getElementById("bgmBtn").textContent = "🔊";
   }
