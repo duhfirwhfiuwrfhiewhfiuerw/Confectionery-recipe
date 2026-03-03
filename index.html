@@ -254,10 +254,7 @@ function filterRecipes(){
 function showRecipe(name){
   const r = recipes[name];
 
-  // 목록 숨기기
   document.getElementById("listPage").style.display="none";
-
-  // 상세페이지 보이기
   document.getElementById("detailPage").style.display="block";
 
   display.innerHTML=`
@@ -270,10 +267,11 @@ function showRecipe(name){
   `;
 }
 
-</script>
 function goBack(){
   document.getElementById("listPage").style.display="block";
   document.getElementById("detailPage").style.display="none";
 }
+</script>
+
 </body>
 </html>
