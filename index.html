@@ -202,24 +202,70 @@ iframe{
   border:2px solid #555;
 }
 
-.dark .darkToggle{
-  background:#4a3b32;
-  color:#fff;
+/* 슬라이드 토글 공통 */
+.switch {
+  position: absolute;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #f1d6bd;
+  transition: 0.4s;
+  border-radius: 26px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #4a3b32;
+}
+
+input:checked + .slider:before {
+  transform: translateX(24px);
+}
+
+#bgmSwitch:checked + .slider {
+  background-color: #d98b8b;
 }
 </style>
 </head>
-
 <body>
 
 <div class="app">
 
 <h1>🍰 실기 레시피</h1>
-<!-- 🎵 BGM 버튼 -->
-<button onclick="toggleBGM()" id="bgmBtn" class="bgmToggle">🔈</button>
+<!-- 🎵 BGM 슬라이드 -->
+<label class="switch" id="bgmSwitchLabel" style="top:10px; left:10px;">
+  <input type="checkbox" id="bgmSwitch">
+  <span class="slider"></span>
+</label>
 
-<!-- 유튜브 BGM iframe (숨김) -->
-<div id="bgmFrame" style="width:0;height:0;overflow:hidden;position:absolute;top:0;left:0;"></div>
-<button onclick="toggleDarkMode()" id="darkBtn" class="darkToggle">🌙</button>
+<!-- 🌙 다크모드 슬라이드 -->
+<label class="switch" id="darkSwitchLabel" style="top:15px; right:15px;">
+  <input type="checkbox" id="darkSwitch">
+  <span class="slider"></span>
+</label>
 
 <input type="text" id="searchInput" placeholder="🔍 품목 검색..." oninput="filterRecipes()">
 
@@ -232,8 +278,10 @@ iframe{
   <div id="recipeDisplay" class="recipeBox"></div>
 </div>
 
-</div>
+<!-- YouTube BGM iframe (숨김) -->
+<div id="bgmFrame" style="width:0;height:0;overflow:hidden;position:absolute;top:0;left:0;"></div>
 
+<script src="https://www.youtube.com/iframe_api"></script>
 <script>
 
 
@@ -351,15 +399,16 @@ function goBack(){
   document.getElementById("detailPage").style.display="none";
 }
 
-/* 🌙 아이콘 토글만 수정 */
-function toggleDarkMode(){
-  document.body.classList.toggle("dark");
-  const btn=document.getElementById("darkBtn");
-  btn.textContent=document.body.classList.contains("dark") ? "☀" : "🌙";
-}
-/* 🎵 BGM */
+// 🌓 다크모드 슬라이드
+const darkSwitch = document.getElementById("darkSwitch");
+darkSwitch.addEventListener("change", function() {
+  document.body.classList.toggle("dark", this.checked);
+});
+
+// 🎵 BGM 슬라이드
+const bgmSwitch = document.getElementById("bgmSwitch");
 let player;
-let bgmPlaying = false;
+let bgmReady = false;
 
 function onYouTubeIframeAPIReady() {
   player = new YT.Player('bgmFrame', {
@@ -367,22 +416,19 @@ function onYouTubeIframeAPIReady() {
     width: '0',
     videoId: 'GI-u9-X8ka8',
     playerVars: { autoplay:0, loop:1, playlist:'GI-u9-X8ka8' },
-    events: { onReady: ()=>{} }
+    events: { onReady: function() { bgmReady=true; } }
   });
 }
 
-document.getElementById("bgmBtn").addEventListener("click", function() {
-  if (!bgmPlaying) {
+bgmSwitch.addEventListener("change", function() {
+  if(!bgmReady) return;
+  if(this.checked){
     player.playVideo();
     player.unMute();
-    this.textContent = "🔊";
   } else {
     player.pauseVideo();
-    this.textContent = "🔈";
   }
-  bgmPlaying = !bgmPlaying;
 });
 </script>
-<script src="https://www.youtube.com/iframe_api"></script>
 </body>
 </html>
