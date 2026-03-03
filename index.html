@@ -301,7 +301,18 @@ input:checked + .slider.darkSlider {
 
 <script src="https://www.youtube.com/iframe_api"></script>
 <script>
-
+// ✅ 슬라이드 아이콘 표시
+function updateSliderIcons(sliderId){
+  const input = document.getElementById(sliderId);
+  const slider = input.nextElementSibling;
+  function updateIcon(){
+    slider.textContent = input.checked ? slider.dataset.on : slider.dataset.off;
+  }
+  input.addEventListener("change", updateIcon);
+  updateIcon();
+}
+updateSliderIcons("darkSwitch");
+updateSliderIcons("bgmSwitch");
 
 const recipes = {
 "시퐁케이크": { category:"별립법", ingredients:`박력분,설탕A,설탕B,달걀,소금,베이킹파우더,식용유,물`, process:`1.노른자에 설탕A와 소금을 넣고 섞고 중탕한 물 식용유 넣고 섞은다음 체친가루를 넣고 섞어주세요. 2.흰자를 반죽기에 넣어 설탕을 3번에 나누어 머랭을 만들어주세요. 3.노른자반죽에 머랭을 반씩 나누어 섞어주세요. 4.비중을 측정한 뒤 작은볼로 떠올려 시퐁팬에 팬닝을 해주고 젓가락으로 휘휘저으며 기포제거해주세요. 5.오븐에 30분 굽고 뒤집어서 식힌 뒤 틀을 조심히 빼주고 마무리해주세요.`, oven:`170/150도 30분`, density:`0.4~0.5`, tips:`틀에 물을 충분히 분무하기,계란분리하기`, youtube:`https://www.youtube.com/embed/Ad5LwgpMKsE` },
