@@ -301,13 +301,26 @@ input:checked + .slider:before {
 }
 
 /* 다크모드 색상 변경 */
+  .slider.darkSlider {
+  background-color: #f1d6bd;
+}
 input:checked + .slider.darkSlider {
   background-color: #4a3b32;
 }
 
 /* 브금 색상 변경 */
-#bgmSwitch:checked + .slider {
+.slider.bgmSlider {
+  background-color: #f1d6bd;
+}
+input:checked + .bgmSlider {
   background-color: #d98b8b;
+}
+/* 아이콘 스타일 */
+.slider .icon-left,
+.slider .icon-right {
+  pointer-events: none; /* 아이콘 클릭 막기 */
+  font-size: 18px;
+  z-index: 1; /* 슬라이더 동그라미 위로 올라오지 않게 */
 }
 </style>
 </head>
