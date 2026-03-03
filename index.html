@@ -359,16 +359,21 @@ function toggleBGM(){
     document.getElementById("bgmBtn").textContent = "🔈";
   } else {
     // 켜기: iframe 다시 삽입
-    const ytID = "GI-u9-X8ka8"; // 원하는 유튜브 ID로 변경
-    frame.innerHTML = `<iframe id="bgmIframe" 
-                          src="https://www.youtube.com/embed/GI-u9-X8ka8?autoplay=1&loop=1&playlist=GI-u9-X8ka8"
-                          frameborder="0" allow="autoplay; encrypted-media; loop"
-                          allowfullscreen
-                          style="width:0;height:0;border:0;"></iframe>`;
-    document.getElementById("bgmBtn").textContent = "🔊";
+    const ytID = "GI-u9-X8ka8"; // 유튜브 ID
+frame.innerHTML = `<iframe id="bgmIframe" 
+                      src="https://www.youtube.com/embed/${ytID}?autoplay=1&loop=1&playlist=${ytID}&mute=1"
+                      frameborder="0" allow="autoplay; encrypted-media; loop"
+                      allowfullscreen
+                      style="width:0;height:0;border:0;"></iframe>`;
+
+// iframe이 만들어진 후에 소리 켜기
+setTimeout(() => {
+  const iframe = document.getElementById("bgmIframe");
+  if(iframe){
+    iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
   }
-  bgmPlaying = !bgmPlaying;
-}
+}, 500); // 0.5초 뒤 실행
+document.getElementById("bgmBtn").textContent = "🔊";
 
 </script>
 </body>
