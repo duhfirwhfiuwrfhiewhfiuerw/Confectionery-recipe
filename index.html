@@ -188,9 +188,14 @@ iframe{
 
 <input type="text" id="searchInput" placeholder="🔍 품목 검색..." oninput="filterRecipes()">
 
-<div id="buttonArea"></div>
-<div id="recipeDisplay" class="recipeBox"></div>
+<div id="listPage">
+  <div id="buttonArea"></div>
+</div>
 
+<div id="detailPage" style="display:none;">
+  <button onclick="goBack()">⬅ 뒤로가기</button>
+  <div id="recipeDisplay" class="recipeBox"></div>
+</div>
 </div>
 
 <script>
@@ -249,6 +254,9 @@ function filterRecipes(){
 function showRecipe(name){
   const r = recipes[name];
 
+  document.getElementById("listPage").style.display="none";
+  document.getElementById("detailPage").style.display="block";
+
   display.innerHTML=`
   <h2>${name}</h2>
   <p><b>📋 재료</b><br>${r.ingredients}</p>
@@ -260,6 +268,9 @@ function showRecipe(name){
 }
 
 </script>
-
+function goBack(){
+  document.getElementById("listPage").style.display="block";
+  document.getElementById("detailPage").style.display="none";
+}
 </body>
 </html>
