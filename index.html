@@ -385,32 +385,32 @@ iframe{
 <div id="splash">🍰 JSHG</div>
 <div class="app">
 
-<!-- 🌸 상단 헤더 -->
 <div class="header">
-
   <h1 class="title">🍰 실기 레시피</h1>
-<div class="toggleArea">
 
-  <!-- 다크모드 -->
-  <label class="pillSwitch">
-    <input type="checkbox" id="darkSwitch">
-    <span class="pill">
-      <span class="icon">🌙</span>
-      <span class="knob"></span>
-    </span>
-  </label>
+  <div class="toggleArea">
+    <!-- 다크모드 -->
+    <label class="pillSwitch">
+      <input type="checkbox" id="darkSwitch">
+      <span class="pill">
+        <span class="icon">🌙</span>
+        <span class="knob"></span>
+      </span>
+    </label>
 
-  <!-- BGM -->
-  <label class="pillSwitch">
-    <input type="checkbox" id="bgmSwitch">
-    <span class="pill">
-      <span class="icon">🔊</span>
-      <span class="knob"></span>
-    </span>
-  </label>
-
+    <!-- BGM -->
+    <label class="pillSwitch">
+      <input type="checkbox" id="bgmSwitch">
+      <span class="pill">
+        <span class="icon">🔊</span>
+        <span class="knob"></span>
+      </span>
+    </label>
+  </div>
 </div>
-  <input type="text" id="searchInput" placeholder="🔍 품목 검색..." oninput="filterRecipes()">
+
+<!-- ✅ header 밖으로 빼기 -->
+<input type="text" id="searchInput" placeholder="🔍 품목 검색..." oninput="filterRecipes()">
 
 <div id="listPage">
   <div id="buttonArea"></div>
