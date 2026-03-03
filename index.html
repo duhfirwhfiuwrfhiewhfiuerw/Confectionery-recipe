@@ -283,22 +283,24 @@ function filterRecipes(){
 }
 
 function showRecipe(name){
-  const r=recipes[name];
-  document.getElementById("listPage").style.display="none";
-  document.getElementById("detailPage").style.display="block";
+  const r = recipes[name];
+  document.getElementById("listPage").style.display = "none";
+  document.getElementById("detailPage").style.display = "block";
 
-  display.innerHTML=`
-  <h2>${name}</h2>
-  <p><b>📋 재료</b><br>${r.ingredients}</p>
-  <p><b>👩🏻‍🍳 공정</b><br>${r.process}</p>
-  <p><b>🔥 오븐</b><br>${r.oven}</p>
-  <p><b>⚖️ 비중</b><br>${r.density}</p>
-  <p><b>✨ 중요사항</b><br>${r.tips}</p>
-  ${r.youtube ? `
-  <div class="videoFrame">
-    <iframe src="${r.youtube}" frameborder="0" allowfullscreen></iframe>
-  </div>
-` : ""}
+  display.innerHTML = `
+    <h2>${name}</h2>
+    <p><b>📋 재료</b><br>${r.ingredients}</p>
+    <p><b>👩🏻‍🍳 공정</b><br>${r.process}</p>
+    <p><b>🔥 오븐</b><br>${r.oven}</p>
+    <p><b>⚖️ 비중</b><br>${r.density}</p>
+    <p><b>✨ 중요사항</b><br>${r.tips}</p>
+    ${r.youtube ? `
+      <div class="videoFrame">
+        <iframe src="${r.youtube}" frameborder="0" allowfullscreen></iframe>
+      </div>
+    ` : ""}
+  `;
+}
 
 function goBack(){
   document.getElementById("listPage").style.display="block";
