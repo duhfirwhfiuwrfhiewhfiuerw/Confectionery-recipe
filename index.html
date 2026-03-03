@@ -58,10 +58,6 @@ body{
     100% { transform: translateY(120vh) rotate(360deg); }
 }
 
-<!-- 인트로 화면 -->
-<div id="splash">
-  🍰 KC
-</div>
 .app{
   display: none; /* ⬅ 인트로 나오기 전 숨김 */
   width:390px;
@@ -102,7 +98,7 @@ body{
 h1{
   text-align:center;
   color:#6b4f3a;
-}
+}h3{color:#6b4f3a; margin-top:20px;}
 /* 🌙 / 🎵 토글 버튼 크기 키움 */
 .switch {
   position: relative;
@@ -319,6 +315,8 @@ input:checked + .slider.darkSlider {
 </head>
 <body>
 
+<!-- 🎉 인트로 -->
+<div id="splash">🍰 KC</div>
 <div class="app">
 
 <h1>🍰 실기 레시피</h1>
@@ -476,33 +474,32 @@ function goBack(){
   document.getElementById("listPage").style.display="block";
   document.getElementById("detailPage").style.display="none";
 }
-function createFallingIcons(){
-    const icons = ["🍰","🧁","🥐","🥖","🍩"];
-    for(let i=0; i<30; i++){
-        const span = document.createElement("span");
-        span.textContent = icons[Math.floor(Math.random() * icons.length)];
-        span.style.left = Math.random()*100 + "vw";
-        span.style.fontSize = 20 + Math.random()*30 + "px";
-        span.style.opacity = 0.05 + Math.random()*0.15;
-        span.style.animationDuration = 10 + Math.random()*15 + "s";
-        span.classList.add("falling");
-        document.body.appendChild(span);
-    }
+// 🎉 인트로 + 배경 아이콘
+function createSplashIcons(){
+  const icons = ["🍰","🧁","🥐","🥖","🍩"];
+  for(let i=0;i<15;i++){
+    const span = document.createElement("span");
+    span.textContent = icons[Math.floor(Math.random()*icons.length)];
+    span.style.left = Math.random()*100 + "vw";
+    span.style.fontSize = 20 + Math.random()*30 + "px";
+    span.style.opacity = 0.1 + Math.random()*0.2;
+    span.style.animationDuration = 5 + Math.random()*5 + "s";
+    span.classList.add("fallingSplash");
+    document.getElementById("splash").appendChild(span);
+  }
 }
-window.onload = function(){
-    createFallingIcons();
-    createButtons();
-// 🎉 인트로용 아이콘 만들기 + fade out
-    createSplashIcons(); // 인트로 아이콘 생성
-
-    setTimeout(()=>{
-        const splash = document.getElementById("splash");
-        splash.style.opacity = 0; // 서서히 사라짐
-        setTimeout(()=>{
-            splash.style.display = "none"; // 완전히 제거
-            document.querySelector(".app").style.display = "block"; // 앱 화면 등장
-        },1000);
-    },2000);
+function createFallingIcons(){
+  const icons = ["🍰","🧁","🥐","🥖","🍩"];
+  for(let i=0;i<30;i++){
+    const span = document.createElement("span");
+    span.textContent = icons[Math.floor(Math.random()*icons.length)];
+    span.style.left = Math.random()*100 + "vw";
+    span.style.fontSize = 20 + Math.random()*30 + "px";
+    span.style.opacity = 0.05 + Math.random()*0.15;
+    span.style.animationDuration = 10 + Math.random()*15 + "s";
+    span.classList.add("falling");
+    document.body.appendChild(span);
+  }
 }
 
 // 🌓 다크모드 슬라이드
