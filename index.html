@@ -178,6 +178,38 @@ iframe{
   margin-top:10px;
   border-radius:15px;
 }
+  /* 🌙 다크모드 */
+.dark{
+  background:linear-gradient(#2c2c2c,#1f1f1f);
+}
+
+.dark .app{
+  background:#2b2b2b;
+  color:#f5f5f5;
+}
+
+.dark h1{
+  color:#ffd8b5;
+}
+
+.dark input{
+  background:#3a3a3a;
+  color:white;
+  border:1px solid #555;
+}
+
+.dark button{
+  background:#4a3b32;
+  color:#fff3e8;
+  box-shadow:0 4px 0 #2f251f;
+}
+
+.dark .recipeBox{
+  background:#3a3a3a;
+  border:2px solid #555;
+  color:#fff;
+}
+
 </style>
 </head>
 
@@ -185,8 +217,10 @@ iframe{
 
 <div class="app">
 <h1>🍰 실기 레시피</h1>
+<button onclick="toggleDarkMode()" id="darkBtn">🌙 다크모드</button>
 
 <input type="text" id="searchInput" placeholder="🔍 품목 검색..." oninput="filterRecipes()">
+
 
 <div id="listPage">
   <div id="buttonArea"></div>
@@ -271,6 +305,17 @@ function showRecipe(name){
 function goBack(){
   document.getElementById("listPage").style.display="block";
   document.getElementById("detailPage").style.display="none";
+}
+  function toggleDarkMode(){
+  document.body.classList.toggle("dark");
+
+  const btn = document.getElementById("darkBtn");
+
+  if(document.body.classList.contains("dark")){
+    btn.textContent="☀ 라이트모드";
+  }else{
+    btn.textContent="🌙 다크모드";
+  }
 }
 </script>
 </body>
