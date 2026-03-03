@@ -54,48 +54,58 @@ h1{
   text-align:center;
   color:#6b4f3a;
 }
-
-/* 🌙 오른쪽 상단 아이콘 버튼 */
-.darkToggle{
-  position:absolute;
-  top:15px;
-  right:15px;
-  width:45px;
-  height:45px;
-  border-radius:50%;
-  border:none;
-  background:#f1d6bd;
-  font-size:20px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  box-shadow:0 4px 10px rgba(0,0,0,0.1);
-}
-/* 🎵 왼쪽 상단 BGM 버튼 */
-.bgmToggle{
-  position:absolute;
-  top:10px;
-  left:10px;
-  width:30px;
-  height:30px;
-  border-radius:50%;
-  border:none;
-  background:#f1d6bd;
-  font-size:16px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  box-shadow:0 2px 5px rgba(0,0,0,0.1);
-  z-index:10;
+/* 🌙 / 🎵 토글 버튼 크기 키움 */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 90px;
+  height: 40px;
+  margin-bottom: 15px;
 }
 
-
-h3{
-  margin-top:25px;
-  color:#8b6b55;
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #f1d6bd;
+  transition: 0.4s;
+  border-radius: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  font-size: 20px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 32px;
+  width: 32px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+  z-index:1;
+}
+
+input:checked + .slider:before {
+  transform: translateX(50px);
+}
+
+input:checked + .slider.darkSlider {
+  background-color: #4a3b32;
+}
+
+#bgmSwitch:checked + .slider {
+  background-color: #d98b8b;}
 
 /* 🔍 검색창 업그레이드 */
 input{
