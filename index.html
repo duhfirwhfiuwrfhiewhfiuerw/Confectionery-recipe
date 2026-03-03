@@ -353,27 +353,34 @@ function toggleDarkMode(){
 let bgmPlaying = false;
 function toggleBGM(){
   const frame = document.getElementById("bgmFrame");
+  const btn = document.getElementById("bgmBtn");
+
   if(bgmPlaying){
     // 끄기: iframe 제거
     frame.innerHTML = '';
-    document.getElementById("bgmBtn").textContent = "🔈";
+    btn.textContent = "🔈";
   } else {
-    // 켜기: iframe 다시 삽입
-    const ytID = "GI-u9-X8ka8"; // 유튜브 ID
-frame.innerHTML = `<iframe id="bgmIframe" 
-                      src="https://www.youtube.com/embed/${ytID}?autoplay=1&loop=1&playlist=${ytID}&mute=1"
-                      frameborder="0" allow="autoplay; encrypted-media; loop"
-                      allowfullscreen
-                      style="width:0;height:0;border:0;"></iframe>`;
+    // 켜기: iframe 삽입 + 소리 켜기
+    const ytID = "GI-u9-X8ka8";
+    frame.innerHTML = `<iframe id="bgmIframe" 
+                          src="https://www.youtube.com/embed/${ytID}?autoplay=1&loop=1&playlist=${ytID}&mute=1"
+                          frameborder="0" allow="autoplay; encrypted-media; loop"
+                          allowfullscreen
+                          style="width:0;height:0;border:0;"></iframe>`;
 
-// iframe이 만들어진 후에 소리 켜기
-setTimeout(() => {
-  const iframe = document.getElementById("bgmIframe");
-  if(iframe){
-    iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+    btn.textContent = "🔊";
+
+    // iframe이 로드될 시간을 조금 준 뒤 unMute
+    setTimeout(() => {
+      const iframe = document.getElementById("bgmIframe");
+      if(iframe){
+        iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+      }
+    }, 500); // 0.5초 뒤 실행
   }
-}, 500); // 0.5초 뒤 실행
-document.getElementById("bgmBtn").textContent = "🔊";
+
+  bgmPlaying = !bgmPlaying;
+}
 
 </script>
 </body>
