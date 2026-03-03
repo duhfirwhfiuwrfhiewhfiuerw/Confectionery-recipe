@@ -202,12 +202,13 @@ iframe{
   border:2px solid #555;
 }
 
-/* 슬라이드 토글 공통 */
+/* 🔘 슬라이드 토글 (큰 사이즈 + 아이콘) */
 .switch {
-  position: absolute;
+  position: relative;
   display: inline-block;
-  width: 50px;
-  height: 26px;
+  width: 70px;
+  height: 34px;
+  margin-bottom: 15px;
 }
 
 .switch input { 
@@ -222,40 +223,38 @@ iframe{
   top: 0; left: 0; right: 0; bottom: 0;
   background-color: #f1d6bd;
   transition: 0.4s;
-  border-radius: 26px;
+  border-radius: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  font-size: 18px;
 }
 
 .slider:before {
   position: absolute;
-  content: "";
-  height: 20px;
-  width: 20px;
-  left: 3px;
-  bottom: 3px;
+  content: " ";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
   background-color: white;
   transition: 0.4s;
   border-radius: 50%;
 }
 
-input:checked + .slider {
+input:checked + .slider:before {
+  transform: translateX(36px);
+}
+
+/* 다크모드 색상 변경 */
+input:checked + .slider.darkSlider {
   background-color: #4a3b32;
 }
 
-input:checked + .slider:before {
-  transform: translateX(24px);
-}
-
+/* 브금 색상 변경 */
 #bgmSwitch:checked + .slider {
   background-color: #d98b8b;
-}
-  
-/* 슬라이드 옆 아이콘 */
-.switch .icon {
-  position: absolute;
-  top: 50%;
-  left: 60px; /* 슬라이드 오른쪽 옆 */
-  transform: translateY(-50%);
-  font-size: 20px;
 }
 </style>
 </head>
@@ -264,19 +263,16 @@ input:checked + .slider:before {
 <div class="app">
 
 <h1>🍰 실기 레시피</h1>
-<!-- 슬라이드 아래쪽 배치 -->
-<!-- 🌙 다크모드 -->
-<label class="switch" id="darkSwitchLabel" style="top:15px; right:15px;">
+<!-- 🌙 다크모드 슬라이드 -->
+<label class="switch" style="position:absolute; top:15px; right:15px;">
   <input type="checkbox" id="darkSwitch">
-  <span class="slider"></span>
-  <span class="icon">🌙</span>
+  <span class="slider darkSlider" data-on="🌙" data-off="☀️"></span>
 </label>
 
-<!-- 🎵 BGM -->
-<label class="switch" id="bgmSwitchLabel" style="top:70px; right:15px;">
+<!-- 🎵 BGM 슬라이드 -->
+<label class="switch" style="position:absolute; top:65px; right:15px;">
   <input type="checkbox" id="bgmSwitch">
-  <span class="slider"></span>
-  <span class="icon">🎵</span>
+  <span class="slider" data-on="🔊" data-off="🔇"></span>
 </label>
 
 <input type="text" id="searchInput" placeholder="🔍 품목 검색..." oninput="filterRecipes()">
