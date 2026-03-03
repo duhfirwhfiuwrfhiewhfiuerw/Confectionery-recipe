@@ -21,15 +21,14 @@ body{
   padding:20px;
   box-sizing:border-box;
   position:relative;
-
-  border-radius:30px;              /* 🔥 둥글게 */
-  border:3px solid #f1e2d3;        /* 🔥 테두리 */
-  box-shadow:0 20px 40px rgba(0,0,0,0.08);  /* 🔥 떠있는 느낌 */
-}
-  .app{
-  outline:8px solid #f8efe6;   /* 바깥 크림 프레임 */
+  border-radius:30px;
+  border:3px solid #f1e2d3;
+  box-shadow:0 20px 40px rgba(0,0,0,0.08);
+  outline:8px solid #f8efe6;
   outline-offset:8px;
 }
+
+/* 🍰 배경 일러스트 */
 .app::before{
   content:"🍰 🥐 🍞 🧁 🥖 🍩";
   position:absolute;
@@ -40,7 +39,6 @@ body{
   letter-spacing:25px;
   pointer-events:none;
 }
-
 .app::after{
   content:"🧁 🍰 🍞 🥐";
   position:absolute;
@@ -51,9 +49,28 @@ body{
   letter-spacing:20px;
   pointer-events:none;
 }
+
 h1{
   text-align:center;
   color:#6b4f3a;
+}
+
+/* 🌙 오른쪽 상단 아이콘 버튼 */
+.darkToggle{
+  position:absolute;
+  top:15px;
+  right:15px;
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  border:none;
+  background:#f1d6bd;
+  font-size:20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
 }
 
 h3{
@@ -61,13 +78,17 @@ h3{
   color:#8b6b55;
 }
 
+/* 🔍 검색창 업그레이드 */
 input{
   width:100%;
-  padding:12px;
-  border-radius:20px;
-  border:1px solid #e6d7c8;
-  margin-bottom:15px;
+  padding:18px;
+  border-radius:30px;
+  border:2px solid #e6d7c8;
+  margin:25px 0 15px 0;
   box-sizing:border-box;
+  font-size:17px;
+  background:#fff;
+  box-shadow:0 4px 10px rgba(0,0,0,0.05);
 }
 
 button{
@@ -78,7 +99,7 @@ button{
   border-radius:30px;
   background:#f1d6bd;
   font-weight:bold;
-  font-size:16px;   /* 🔥 글씨 크게 */
+  font-size:16px;
   letter-spacing:1px;
   color:#5c4332;
   cursor:pointer;
@@ -119,13 +140,10 @@ iframe{
 .dark .app{
   background:#2b2b2b;
   color:#f5f5f5;
-  border:3px solid #444;   /* 다크모드 테두리 */
+  border:3px solid #444;
   box-shadow:0 20px 40px rgba(0,0,0,0.5);
 }
-.dark .app::before,
-.dark .app::after{
-  opacity:0.05;
-}
+
 .dark h1{ color:#ffd8b5; }
 .dark h3{ color:#ffcc9c; }
 
@@ -145,15 +163,21 @@ iframe{
   background:#3a3a3a;
   border:2px solid #555;
 }
+
+.dark .darkToggle{
+  background:#4a3b32;
+  color:#fff;
+}
 </style>
 </head>
 
 <body>
 
 <div class="app">
+
 <h1>🍰 실기 레시피</h1>
 
-<button onclick="toggleDarkMode()" id="darkBtn">🌙 다크모드</button>
+<button onclick="toggleDarkMode()" id="darkBtn" class="darkToggle">🌙</button>
 
 <input type="text" id="searchInput" placeholder="🔍 품목 검색..." oninput="filterRecipes()">
 
@@ -170,8 +194,9 @@ iframe{
 
 <script>
 
-const recipes = {
+/* 👇👇👇 여기 아래는 네 원래 JS 그대로임 (수정된 건 toggleDarkMode만 아이콘용으로 살짝 변경) */
 
+const recipes = {
 "시퐁케이크": { category:"별립법", ingredients:``, process:``, oven:``, density:``, tips:``, youtube:`` },
 "마들렌": { category:"크림법", ingredients:``, process:``, oven:``, density:``, tips:``, youtube:`` },
 "버터스펀지케이크": { category:"공립법", ingredients:``, process:``, oven:``, density:``, tips:``, youtube:`` },
@@ -207,7 +232,6 @@ youtube:`https://www.youtube.com/embed/p3ccdzOTIHM`
 "비스킷": { category:"복합법", ingredients:``, process:``, oven:``, density:``, tips:``, youtube:`` },
 "머랭쿠키": { category:"별립법", ingredients:``, process:``, oven:``, density:``, tips:``, youtube:`` },
 "과일케이크": { category:"복합법", ingredients:``, process:``, oven:``, density:``, tips:``, youtube:`` }
-
 };
 
 const buttonArea = document.getElementById("buttonArea");
@@ -229,7 +253,6 @@ function createButtons(filter=""){
         section.appendChild(btn);
       }
     }
-
     buttonArea.appendChild(section);
   });
 }
@@ -262,12 +285,11 @@ function goBack(){
   document.getElementById("detailPage").style.display="none";
 }
 
+/* 🌙 아이콘 토글만 수정 */
 function toggleDarkMode(){
   document.body.classList.toggle("dark");
   const btn=document.getElementById("darkBtn");
-  btn.textContent=document.body.classList.contains("dark")
-  ? "☀ 라이트모드"
-  : "🌙 다크모드";
+  btn.textContent=document.body.classList.contains("dark") ? "☀" : "🌙";
 }
 
 </script>
