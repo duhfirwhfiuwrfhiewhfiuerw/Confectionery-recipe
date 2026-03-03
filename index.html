@@ -288,6 +288,7 @@ youtube:`https://www.youtube.com/embed/p3ccdzOTIHM`
 "과일케이크": { category:"별립법", ingredients:`박력분,설탕,마가린,달걀,우유,베이킹파우더,소금,건포도,체리,호두,오렌지필,럼주,바닐라향`, process:`1.유지를 부드럽게 풀어주고 설탕 2~3번 나눠 섞은 뒤 노른자를 3번 나누어 섞어주고,중탕한 우유와 럼주를 넣어서 섞어주세요. 2.믹싱볼에 흰자를 넣고 설탕을 반씩 넣으며 고속으로 머랭을 만들어주세요. 3.노른자반죽에 머랭을 2/1 투입하여 떠올리듯 섞어주고 가루를 넣어 섞어주고 전처리된 과일을 넣어 섞어주고 마지막 남은 머랭을 넣어 섞어주세요. 4.짤주머니에 반죽을 넣어 일정하게 팬닝 후 젓가락으로 매꿔주세요. 5.오븐에 35분 구워주고 마무리해주세요.`, oven:`170/150도 35분`, density:`비중없음`, tips:`유산지재단,계란분리,우유중탕,건포도물로씻기,체리다지기(물기짜기),전처리과일들 밀가루에 버무리기`, youtube:`https://www.youtube.com/embed/1A_wRdqcl1I` }
 };
 
+// 레시피 버튼 생성
 const buttonArea = document.getElementById("buttonArea");
 const display = document.getElementById("recipeDisplay");
 
@@ -298,16 +299,21 @@ function createButtons(filter=""){
   categories.forEach(cat=>{
     const section=document.createElement("div");
     section.innerHTML=`<h3>🍞 ${cat}</h3>`;
+    let hasRecipe=false;
 
     for(let name in recipes){
       if(recipes[name].category===cat && name.includes(filter)){
+        hasRecipe=true;
         const btn=document.createElement("button");
         btn.textContent=name;
         btn.onclick=()=>showRecipe(name);
         section.appendChild(btn);
       }
     }
-    buttonArea.appendChild(section);
+
+    if(hasRecipe){
+      buttonArea.appendChild(section);
+    }
   });
 }
 
@@ -318,6 +324,7 @@ function filterRecipes(){
   createButtons(keyword);
 }
 
+// 레시피 상세 페이지
 function showRecipe(name){
   const r = recipes[name];
   document.getElementById("listPage").style.display = "none";
@@ -337,6 +344,7 @@ function showRecipe(name){
     ` : ""}
   `;
 }
+
 
 function goBack(){
   document.getElementById("listPage").style.display="block";
