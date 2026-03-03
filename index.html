@@ -350,37 +350,47 @@ function toggleDarkMode(){
   btn.textContent=document.body.classList.contains("dark") ? "☀" : "🌙";
 }
 /* 🎵 BGM 토글 함수 추가 */
+/* 🎵 BGM 토글 - YouTube API 안정화 */
 let bgmPlaying = false;
+let player;
+
 function toggleBGM(){
-  const frame = document.getElementById("bgmFrame");
   const btn = document.getElementById("bgmBtn");
-
-  if(bgmPlaying){
-    // 끄기: iframe 제거
-    frame.innerHTML = '';
-    btn.textContent = "🔈";
-  } else {
-    // 켜기: iframe 삽입 + 소리 켜기
-    const ytID = "GI-u9-X8ka8";
-    frame.innerHTML = `<iframe id="bgmIframe" 
-                          src="https://www.youtube.com/embed/${ytID}?autoplay=1&loop=1&playlist=${ytID}&mute=1"
-                          frameborder="0" allow="autoplay; encrypted-media; loop"
-                          allowfullscreen
-                          style="width:0;height:0;border:0;"></iframe>`;
-
-    btn.textContent = "🔊";
-
-    // iframe이 로드될 시간을 조금 준 뒤 unMute
-    setTimeout(() => {
-      const iframe = document.getElementById("bgmIframe");
-      if(iframe){
-        iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
-      }
-    }, 500); // 0.5초 뒤 실행
+  if(!player){
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.body.appendChild(tag);
   }
 
+  if(!bgmPlaying){
+    if(!player){
+      player = new YT.Player('bgmFrame', {
+        height: '0',
+        width: '0',
+        videoId: 'GI-u9-X8ka8',
+        playerVars: {
+          autoplay: 1,
+          loop: 1,
+          playlist: 'GI-u9-X8ka8'
+        },
+        events: {
+          'onReady': (e) => {
+            e.target.unMute();
+            e.target.playVideo();
+          }
+        }
+      });
+    } else {
+      player.playVideo();
+    }
+    btn.textContent="🔊";
+  } else {
+    player.pauseVideo();
+    btn.textContent="🔈";
+  }
   bgmPlaying = !bgmPlaying;
 }
+</script>
 
 </script>
 </body>
