@@ -438,6 +438,17 @@ iframe{
   margin:10px 0;
   box-shadow:0 4px 0 #cbb39a;
 }
+  .favBtn{
+  border:none;
+  background:none;
+  font-size:22px;
+  cursor:pointer;
+}
+  .method-크림법{ border-left:6px solid #d9bfa6; }
+.method-공립법{ border-left:6px solid #f1c40f; }
+.method-별립법{ border-left:6px solid #f4a7b9; }
+.method-복합법{ border-left:6px solid #b39ddb; }
+.method-수작업{ border-left:6px solid #a5d6a7; }
 </style>
 </head>
 <body>
@@ -577,7 +588,17 @@ function createButtons(filter=""){
     }
   });
 }
+let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
 
+function toggleFavorite(name){
+  if(favorites.includes(name)){
+    favorites = favorites.filter(f => f !== name);
+  } else {
+    favorites.push(name);
+  }
+  localStorage.setItem("favorites", JSON.stringify(favorites));
+  showRecipe(name);
+}
 createButtons();
 
 function filterRecipes(){
@@ -595,32 +616,45 @@ function showRecipe(name){
   document.getElementById("listPage").style.display = "none";
   document.getElementById("detailPage").style.display = "block";
 
-  display.innerHTML = `
-  <div class="recipeHeader">
-    <h2>${name}</h2>
-    <button class="inlineShareBtn" onclick="shareRecipe()" aria-label="공유">🔗</button>
-  </div>
+display.innerHTML = `
+  <div class="recipeBox method-${r.category}">
 
-  <p><b>📋 재료</b><br>${r.ingredients}</p>
-   <button class="toggleProcessBtn" onclick="toggleProcess()">
-  👩🏻‍🍳 공정 접기 / 펼치기
-</button>
+    <div class="recipeHeader">
+      <h2>${name}</h2>
+      <div>
+        <button class="favBtn" onclick="toggleFavorite('${name}')">
+          ${favorites.includes(name) ? "❤️" : "🤍"}
+        </button>
+        <button class="inlineShareBtn" onclick="shareRecipe()">🔗</button>
+      </div>
+    </div>
 
-<div id="processArea">
-  <p><b>👩🏻‍🍳 공정</b><br>${r.process}</p>
-</div>
+    <p><b>📋 재료</b><br>${r.ingredients}</p>
+
+    <button class="toggleProcessBtn" onclick="toggleProcess()">
+      👩🏻‍🍳 공정 접기 / 펼치기
+    </button>
+
+    <div id="processArea">
+      <p><b>👩🏻‍🍳 공정</b><br>${r.process}</p>
+    </div>
+
     <p><b>🔥 오븐</b><br>${r.oven}</p>
     <p><b>⚖️ 비중</b><br>${r.density}</p>
+
     <div class="tipBox">
-⚠️ 시험 포인트<br>
-${r.tips}
-</div>
+      ⚠️ 시험 포인트<br>
+      ${r.tips}
+    </div>
+
     ${r.youtube ? `
       <div class="videoFrame">
         <iframe src="${r.youtube}" frameborder="0" allowfullscreen></iframe>
       </div>
     ` : ""}
-  `;
+
+  </div>
+`;
 }
 
 function toggleProcess(){
