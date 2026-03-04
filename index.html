@@ -377,6 +377,33 @@ iframe{
   flex-direction:column;
   gap:10px;
 }
+  /* 📤 공유 버튼 */
+.shareBtn{
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #f1d6bd;
+  color: #5c4332;
+  font-size: 24px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  z-index: 999;
+  display: none;
+  transition: transform 0.2s;
+}
+
+.shareBtn:hover{
+  transform: scale(1.1);
+}
+
+.dark .shareBtn{
+  background:#4a3b32;
+  color:#fff3e8;
+}
 </style>
 </head>
 <body>
@@ -525,10 +552,15 @@ function filterRecipes(){
 }
 
 // 레시피 상세 페이지
+let currentRecipeName = "";
+
 function showRecipe(name){
+  currentRecipeName = name;
   const r = recipes[name];
+
   document.getElementById("listPage").style.display = "none";
   document.getElementById("detailPage").style.display = "block";
+  document.getElementById("shareBtn").style.display = "block";
 
   display.innerHTML = `
     <h2>${name}</h2>
@@ -546,9 +578,11 @@ function showRecipe(name){
 }
 
 
+
 function goBack(){
   document.getElementById("listPage").style.display="block";
   document.getElementById("detailPage").style.display="none";
+  document.getElementById("shareBtn").style.display="none";
 }
 // 🎉 인트로용 아이콘 생성
 function createSplashIcons(){
@@ -631,6 +665,28 @@ window.addEventListener("load", () => {
     }, 1000);
   }, 2000); // 2초 후 페이드 아웃
 });
+
+  function shareRecipe(){
+  const r = recipes[currentRecipeName];
+
+  const text = `🍰 ${currentRecipeName}
+📋 재료: ${r.ingredients}
+🔥 오븐: ${r.oven}
+✨ 팁: ${r.tips}`;
+
+  if(navigator.share){
+    navigator.share({
+      title: currentRecipeName,
+      text: text
+    });
+  } else {
+    navigator.clipboard.writeText(text);
+    alert("레시피가 클립보드에 복사됐어요!");
+  }
+}
 </script>
+  
+<!-- 📤 공유 버튼 -->
+<button class="shareBtn" id="shareBtn" onclick="shareRecipe()">📤</button>
 </body>
 </html>
