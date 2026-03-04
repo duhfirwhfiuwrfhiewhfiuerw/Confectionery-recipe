@@ -563,7 +563,6 @@ function showRecipe(name){
 
   document.getElementById("listPage").style.display = "none";
   document.getElementById("detailPage").style.display = "block";
-  document.getElementById("shareBtn").style.display = "block";
 
   display.innerHTML = `
   <div class="recipeHeader">
@@ -589,7 +588,6 @@ function showRecipe(name){
 function goBack(){
   document.getElementById("listPage").style.display="block";
   document.getElementById("detailPage").style.display="none";
-  document.getElementById("shareBtn").style.display="none";
 }
 // 🎉 인트로용 아이콘 생성
 function createSplashIcons(){
