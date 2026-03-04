@@ -483,7 +483,9 @@ iframe{
 
 <!-- ✅ header 밖으로 빼기 -->
 <input type="text" id="searchInput" placeholder="🔍 품목 검색..." oninput="filterRecipes()">
-
+<button onclick="toggleFavoriteView()" id="favFilterBtn">
+  ❤️ 즐겨찾기만 보기
+</button>
 <div id="listPage">
   <div id="buttonArea"></div>
 </div>
@@ -574,7 +576,11 @@ function createButtons(filter=""){
     let hasRecipe=false;
 
     for(let name in recipes){
-      if(recipes[name].category===cat && name.includes(filter)){
+      if(
+  recipes[name].category === cat &&
+  name.includes(filter) &&
+  (!showFavoritesOnly || favorites.includes(name))
+){
         hasRecipe=true;
         const btn=document.createElement("button");
         btn.textContent=name;
@@ -598,6 +604,18 @@ function toggleFavorite(name){
   }
   localStorage.setItem("favorites", JSON.stringify(favorites));
   showRecipe(name);
+}
+  let showFavoritesOnly = false;
+
+function toggleFavoriteView(){
+  showFavoritesOnly = !showFavoritesOnly;
+
+  const btn = document.getElementById("favFilterBtn");
+  btn.textContent = showFavoritesOnly
+    ? "📋 전체 목록 보기"
+    : "❤️ 즐겨찾기만 보기";
+
+  createButtons();
 }
 createButtons();
 
