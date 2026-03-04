@@ -678,9 +678,21 @@ window.addEventListener("load", () => {
   const r = recipes[currentRecipeName];
 
   const text = `🍰 ${currentRecipeName}
-📋 재료: ${r.ingredients}
-🔥 오븐: ${r.oven}
-✨ 팁: ${r.tips}`;
+
+📋 재료
+${r.ingredients}
+
+👩🏻‍🍳 공정
+${r.process}
+
+🔥 오븐
+${r.oven}
+
+⚖️ 비중
+${r.density}
+
+✨ 중요사항
+${r.tips}`;
 
   if(navigator.share){
     navigator.share({
