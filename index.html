@@ -377,33 +377,36 @@ iframe{
   flex-direction:column;
   gap:10px;
 }
-  /* 📤 공유 버튼 */
-.shareBtn{
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: #f1d6bd;
-  color: #5c4332;
-  font-size: 24px;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-  z-index: 999;
-  display: none;
-  transition: transform 0.2s;
+/* 🧷 레시피 제목 + 공유 버튼 */
+.recipeHeader{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
 }
 
-.shareBtn:hover{
-  transform: scale(1.1);
+.inlineShareBtn{
+  width:auto;
+  padding:8px 14px;
+  border-radius:20px;
+  background:#f1d6bd;
+  border:none;
+  cursor:pointer;
+  font-size:16px;
+  box-shadow:0 4px 0 #d9bfa6;
 }
 
-.dark .shareBtn{
+.inlineShareBtn:active{
+  transform:translateY(2px);
+  box-shadow:0 2px 0 #d9bfa6;
+}
+
+.dark .inlineShareBtn{
   background:#4a3b32;
   color:#fff3e8;
+  box-shadow:0 3px 0 #2f251f;
 }
+
 </style>
 </head>
 <body>
@@ -563,8 +566,12 @@ function showRecipe(name){
   document.getElementById("shareBtn").style.display = "block";
 
   display.innerHTML = `
+  <div class="recipeHeader">
     <h2>${name}</h2>
-    <p><b>📋 재료</b><br>${r.ingredients}</p>
+    <button class="inlineShareBtn" onclick="shareRecipe()">📤</button>
+  </div>
+
+  <p><b>📋 재료</b><br>${r.ingredients}</p>
     <p><b>👩🏻‍🍳 공정</b><br>${r.process}</p>
     <p><b>🔥 오븐</b><br>${r.oven}</p>
     <p><b>⚖️ 비중</b><br>${r.density}</p>
@@ -685,8 +692,5 @@ window.addEventListener("load", () => {
   }
 }
 </script>
-  
-<!-- 📤 공유 버튼 -->
-<button class="shareBtn" id="shareBtn" onclick="shareRecipe()">📤</button>
 </body>
 </html>
