@@ -384,6 +384,13 @@ iframe{
   align-items:center;
   gap:10px;
 }
+.recipeHeader{
+  position: sticky;
+  top: 0;
+  background: inherit;
+  padding: 10px 0;
+  z-index: 5;
+}
 .inlineShareBtn{
   width:36px;
   height:36px;
@@ -409,7 +416,28 @@ iframe{
   color:#fff3e8;
   box-shadow:0 3px 0 #2f251f;
 }
+.recipeBox p{
+  line-height:1.6;
+  margin-bottom:14px;
+}
+  .tipBox{
+  background:#fff3e6;
+  border-left:6px solid #f1b97a;
+  padding:12px;
+  border-radius:14px;
+  margin-top:14px;
+  font-weight:500;
+}
 
+.dark .tipBox{
+  background:#3a2f28;
+  border-left:6px solid #ffb97a;
+}
+  .toggleProcessBtn{
+  background:#e7d6c4;
+  margin:10px 0;
+  box-shadow:0 4px 0 #cbb39a;
+}
 </style>
 </head>
 <body>
@@ -574,10 +602,19 @@ function showRecipe(name){
   </div>
 
   <p><b>📋 재료</b><br>${r.ingredients}</p>
-    <p><b>👩🏻‍🍳 공정</b><br>${r.process}</p>
+   <button class="toggleProcessBtn" onclick="toggleProcess()">
+  👩🏻‍🍳 공정 접기 / 펼치기
+</button>
+
+<div id="processArea">
+  <p><b>👩🏻‍🍳 공정</b><br>${r.process}</p>
+</div>
     <p><b>🔥 오븐</b><br>${r.oven}</p>
     <p><b>⚖️ 비중</b><br>${r.density}</p>
-    <p><b>✨ 중요사항</b><br>${r.tips}</p>
+    <div class="tipBox">
+⚠️ 시험 포인트<br>
+${r.tips}
+</div>
     ${r.youtube ? `
       <div class="videoFrame">
         <iframe src="${r.youtube}" frameborder="0" allowfullscreen></iframe>
@@ -586,7 +623,10 @@ function showRecipe(name){
   `;
 }
 
-
+function toggleProcess(){
+  const el = document.getElementById("processArea");
+  el.style.display = el.style.display === "none" ? "block" : "none";
+}
 
 function goBack(){
   document.getElementById("listPage").style.display="block";
