@@ -384,15 +384,18 @@ iframe{
   align-items:center;
   gap:10px;
 }
-
 .inlineShareBtn{
-  width:auto;
-  padding:8px 14px;
-  border-radius:20px;
+  width:36px;
+  height:36px;
+  padding:0;
+  border-radius:50%;
   background:#f1d6bd;
   border:none;
   cursor:pointer;
-  font-size:16px;
+  font-size:18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   box-shadow:0 4px 0 #d9bfa6;
 }
 
@@ -567,7 +570,7 @@ function showRecipe(name){
   display.innerHTML = `
   <div class="recipeHeader">
     <h2>${name}</h2>
-    <button class="inlineShareBtn" onclick="shareRecipe()">📤</button>
+    <button class="inlineShareBtn" onclick="shareRecipe()" aria-label="공유">🔗</button>
   </div>
 
   <p><b>📋 재료</b><br>${r.ingredients}</p>
